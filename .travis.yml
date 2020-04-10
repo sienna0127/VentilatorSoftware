@@ -17,6 +17,7 @@ jobs:
         #- sudo stat /etc/docker/daemon.json
         #- sudo dockerd &
         #- export DOCKER_CLI_EXPERIMENTAL=enabled
+        - export DOCKER_BUILDKIT=1
         - bash ci/install_buildx.sh
         - docker buildx --help
       install:
