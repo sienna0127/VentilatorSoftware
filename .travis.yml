@@ -1,11 +1,12 @@
-language: cpp
-compiler: gcc
-
 dist: bionic
-services:
-  - docker
+
+addons:
+  apt:
+    update: true
 
 jobs:
   include:
     - stage: "Test"
-      before_install: docker --version
+      before_install:
+        - sudo apt-get install docker
+        - sudo docker --version
