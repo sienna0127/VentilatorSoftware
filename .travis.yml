@@ -1,0 +1,11 @@
+language: cpp
+compiler: gcc
+
+dist: bionic
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: "Test"
+      before_install: docker --version
