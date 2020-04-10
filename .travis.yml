@@ -1,7 +1,7 @@
 dist: bionic
 
-services:
-  - docker
+#services:
+#  - docker
 
 addons:
   apt:
@@ -11,12 +11,12 @@ jobs:
   include:
     - stage: "Test"
       before_install:
-        #- sudo apt-get install docker.io
-        #- sudo docker --version
-        #- sudo usermod -aG docker $USER
-        #- sudo stat /etc/docker/daemon.json
-        #- sudo dockerd &
-        #- export DOCKER_CLI_EXPERIMENTAL=enabled
+        - sudo apt-get install docker-ce
+        - sudo docker --version
+        - sudo usermod -aG docker $USER
+        - sudo stat /etc/docker/daemon.json
+        - sudo dockerd &
+        - export DOCKER_CLI_EXPERIMENTAL=enabled
         - export DOCKER_BUILDKIT=1
         - bash ci/install_buildx.sh
         - docker buildx --help
