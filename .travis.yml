@@ -10,6 +10,12 @@ jobs:
       before_install:
         - sudo apt-get install docker.io
         - sudo docker --version
+        - export DOCKER_CLI_EXPERIMENTAL=enabled
+        - export DOCKER_BUILDKIT=1
+        - docker build --platform=local -o . git://github.com/docker/buildx
+        - mkdir -p ~/.docker/cli-plugins
+        - mv buildx ~/.docker/cli-plugins/docker-buildx
+        - docker buildx --help
       install:
         - true
       before_script:
