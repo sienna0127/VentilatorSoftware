@@ -8,7 +8,7 @@ jobs:
   include:
     - stage: "Test"
       before_install:
-        - sudo apt-get install docker
+        - sudo apt-get install docker.io
         - sudo docker --version
       install:
         - true
