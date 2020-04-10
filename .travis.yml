@@ -11,7 +11,8 @@ jobs:
         - sudo apt-get install docker.io
         - sudo docker --version
         - sudo usermod -aG docker $USER
-        - dockerd &
+        - sudo stat /etc/docker/daemon.json
+        - sudo dockerd &
         - export DOCKER_CLI_EXPERIMENTAL=enabled
         - export DOCKER_BUILDKIT=1
         - docker build --platform=local -o . git://github.com/docker/buildx
