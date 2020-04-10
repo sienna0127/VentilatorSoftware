@@ -10,3 +10,9 @@ jobs:
       before_install:
         - sudo apt-get install docker
         - sudo docker --version
+      install:
+        - true
+      before_script:
+        - true
+      script:
+        - true
