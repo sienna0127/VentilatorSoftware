@@ -16,7 +16,7 @@ TEST_F(AlarmTest, AddOneAlarm) {
   char alarm_data[ALARM_DATALEN];
   memset(alarm_data, 'x', sizeof(alarm_data));
 
-  alarm_add(dataID::alarm_1, alarm_data);
+  alarm_add(alarm_data);
   ASSERT_TRUE(alarm_available());
 }
 
