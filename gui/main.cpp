@@ -5,6 +5,7 @@
 #include <QtCore/QDir>
 #include <QCommandLineParser>
 #include "datasource.h"
+#include "tests/testsuite.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,16 +15,27 @@ int main(int argc, char *argv[])
     QCommandLineParser parser;
     parser.setApplicationDescription("Ventilator GUI application");
     parser.addHelpOption();
-    //  parser.addVersionOption();
 
-    QCommandLineOption dieOption(QStringList() << "d" << "die",
-                                QApplication::translate("main", "Die right away (for testing)"));
-    parser.addOption(dieOption);
-
+    QCommandLineOption testOption(QStringList() << "t" << "test",
+                                QApplication::translate("main", "Run test suites"));
+    parser.addOption(testOption);
     parser.process(app);
 
-    bool die_now = parser.isSet(dieOption);
-
+    // If the app is run with -t, run tests
+    if (parser.isSet(testOption)) 
+    {
+      int failedSuitesCount = 0;
+      QVector<QObject*>::iterator iter;
+      for (iter = TestSuite::suites_.begin(); iter != TestSuite::suites_.end(); ++iter) 
+      {
+          int result = QTest::qExec(*iter);
+          if (result != 0) 
+          {
+              failedSuitesCount++;
+          }
+      }
+      return failedSuitesCount;
+    }
 
     QQuickView mainView;
     QString extraImportPath(QStringLiteral("%1/../../../%2"));
@@ -45,7 +57,7 @@ int main(int argc, char *argv[])
     mainView.setResizeMode(QQuickView::SizeRootObjectToView);
     mainView.setColor(QColor("#000000"));
 
-    if (parser.isSet("h") || die_now)
+    if (parser.isSet("h"))
     {
       return EXIT_SUCCESS;
     }
